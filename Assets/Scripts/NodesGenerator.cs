@@ -149,7 +149,7 @@ public class NodesGenerator : MonoBehaviour
                 SpriteRenderer tailSprRend = tailGO.GetComponentInChildren<SpriteRenderer>();
                 tailSprRend.color = selectedColor;
 
-                tailNode = new Node(i, Color.black, tailSprRend, grid.Cells[0, i]);
+                tailNode = new Node(i, selectedColor, tailSprRend, grid.Cells[0, i]);
 
                 for (int j = 0; j < grid.Width; j++)
                 {
@@ -159,7 +159,7 @@ public class NodesGenerator : MonoBehaviour
                 SpriteRenderer headSprRend = headGO.GetComponentInChildren<SpriteRenderer>();
                 headSprRend.color = selectedColor;
 
-                headNode = new Node(i, Color.black, headSprRend, grid.Cells[(grid.Width - 1), i]);
+                headNode = new Node(i, selectedColor, headSprRend, grid.Cells[(grid.Width - 1), i]);
 
                 for (int j = (grid.Width - 1); j >= 0; j--)
                 {
@@ -251,8 +251,6 @@ public class NodesGenerator : MonoBehaviour
 
             } while (neighborNodesPositions.Count <= 0); // Hasta que coja una cola/cabeza que ha su alrededor tenga otro nodo con cola/cabeza
 
-            yield return null;
-
             // Paso 4.2: Empequeñecemos esa parte y actualizamos la pareja de ese mismo nodo
             Cell previousCell = randomNode.AssociedCell;
 
@@ -321,7 +319,9 @@ public class NodesGenerator : MonoBehaviour
             float t = (float)i / totalIterations;
             float eased = 1f - Mathf.Pow(t, exponent);
             _bgrLoadingImage.fillAmount = eased;
-            yield return null;
+
+            if(i % 2 == 0)
+                yield return null;
         }
 
         // Decimos que ha terminado de generar el tablero
