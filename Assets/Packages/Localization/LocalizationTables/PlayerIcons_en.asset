@@ -26,6 +26,14 @@ MonoBehaviour:
     m_Localized: 'Player Icons unlocked :'
     m_Metadata:
       m_Items: []
+  - m_Id: 6564302903853056
+    m_Localized: Turn up the volume!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6566396457140224
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

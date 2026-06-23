@@ -26,6 +26,14 @@ MonoBehaviour:
     m_Localized: 'Icones desbloquejats :'
     m_Metadata:
       m_Items: []
+  - m_Id: 6564302903853056
+    m_Localized: "\xA1Puja el volum!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6566396457140224
+    m_Localized: Que es faci el silenci
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

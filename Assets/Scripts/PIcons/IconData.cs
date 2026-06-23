@@ -13,6 +13,7 @@ public class IconData : ScriptableObject
     public string RequerimentToUnlock { private set; get; }
 
     public bool IsSecret = false;
+    public bool IsVisible = true;
 
     private bool _initialized = false;
 
@@ -36,6 +37,9 @@ public class IconData : ScriptableObject
             return;
 
         _initialized = true;
+
+        if (!IsVisible)
+            IconSprite = null;
 
         RequerimentLocale.StringChanged += UpdateName;
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;

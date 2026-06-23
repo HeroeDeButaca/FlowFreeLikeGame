@@ -8,7 +8,9 @@ public class Data
     public string PlayerName;
     
     public int IconId;
-    public List<bool> IconsUnlocked;
+    public List<IconUnlocked> IconsUnlocked;
+
+    public int GamesPlayed;
 
     public Data() { }
     public Data(string playerName)
@@ -16,6 +18,27 @@ public class Data
         PlayerId = Guid.NewGuid().ToString("N");
         PlayerName = playerName;
         IconId = 0;
-        IconsUnlocked = new List<bool>();
+        IconsUnlocked = new List<IconUnlocked>();
+        IconsUnlocked.Add(new IconUnlocked(0, true));
     }
+}
+
+[Serializable]
+public class IconUnlocked
+{
+    public int IconId;
+    public bool Unlocked;
+
+    public IconUnlocked(int iconId, bool unlocked)
+    {
+        IconId = iconId;
+        Unlocked = unlocked;
+    }
+}
+
+[Serializable]
+public class Records
+{
+    public int ModeId;
+    public int BestRecord;
 }

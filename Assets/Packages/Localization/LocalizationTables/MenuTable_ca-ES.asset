@@ -27,15 +27,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 8193919655936
-    m_Localized: "F\xE0cil (90s - 4x4)"
+    m_Localized: "F\xE0cil"
     m_Metadata:
       m_Items: []
   - m_Id: 8532118970368
-    m_Localized: Normal (135s - 8x8)
+    m_Localized: Normal
     m_Metadata:
       m_Items: []
   - m_Id: 8635340791808
-    m_Localized: "Dif\xEDcil (180s - 15x15)"
+    m_Localized: "Dif\xEDcil"
     m_Metadata:
       m_Items: []
   - m_Id: 8831428698112
