@@ -118,8 +118,8 @@ public class BoardGenerator : MonoBehaviour
 
     void Start()
     {
-        //GameControllerCPR.Instance.OnReset.AddListener(OnReset);
-        GenerateBoard(7, 6);
+        GameController.Instance.OnReset.AddListener(OnReset);
+        //GenerateBoard(4, 4, 4);
     }
 
     /// <summary>
@@ -127,10 +127,9 @@ public class BoardGenerator : MonoBehaviour
     /// </summary>
     /// <param name="width"></param>
     /// <param name="height"></param>
-    public void GenerateBoard(int width, int height)
+    /// <param name="nodes"></param>
+    public void GenerateBoard(int width, int height, int nodes)
     {
-        // Paso 1: Instanciamos el Grid
-
         // Creamos un objeto de la clase tablero e inicializamos sus celdas
         GridBoard = new Grid(width, height);
 
@@ -172,7 +171,7 @@ public class BoardGenerator : MonoBehaviour
         }
 
         SetCameraToCenter();
-        NodesGenerator.Instance.CreateCorrectBoard(4);
+        NodesGenerator.Instance.CreateCorrectBoard(nodes);
     }
 
     /// <summary>
@@ -248,6 +247,8 @@ public class BoardGenerator : MonoBehaviour
 
     private void OnReset()
     {
+        StopAllCoroutines();
+
         // Si hay casillas pintadas las despintamos
         for (int x = 0; x < GridBoard.Width; x++)
         {

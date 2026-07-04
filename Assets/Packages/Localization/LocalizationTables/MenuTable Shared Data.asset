@@ -39,6 +39,90 @@ MonoBehaviour:
     m_Key: Menu.Mode.Personalized
     m_Metadata:
       m_Items: []
+  - m_Id: 10934310098452480
+    m_Key: Menu.Leaderboard.PlayFirst
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938047751798784
+    m_Key: Menu.ModeDetails.Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938118937526272
+    m_Key: Menu.ModeDetails.Height
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938144954793984
+    m_Key: Menu.ModeDetails.Width
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938171466989568
+    m_Key: Menu.ModeDetails.Nodes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11526761293037568
+    m_Key: Menu.Version.VersionAvailable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11527176164229120
+    m_Key: Menu.Version.Advice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11527599788933120
+    m_Key: Menu.Version.DownloadButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11527783965016064
+    m_Key: Menu.Version.PlayWithoutConnectionButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11551011617914880
+    m_Key: Menu.NoConnection.Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11551985031987200
+    m_Key: Menu.NoConnection.Advice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11552351165366272
+    m_Key: Menu.NoConnection.PlayWithoutConnectionButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11553731145908224
+    m_Key: Menu.NoConnection.ExitButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13109595740848128
+    m_Key: Menu.Options.Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13110019877257216
+    m_Key: Menu.Options.Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13110638461599744
+    m_Key: Menu.Options.UserData
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13111482481393664
+    m_Key: Menu.Options.DeleteData
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13111637599338496
+    m_Key: Menu.Options.ShowFile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13112307865894912
+    m_Key: Menu.Options.Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13487363917889536
+    m_Key: Menu.DeleteDataAdvice.Question
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13487214671970304
+    m_Key: Menu.DeleteDataAdvice.Info
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

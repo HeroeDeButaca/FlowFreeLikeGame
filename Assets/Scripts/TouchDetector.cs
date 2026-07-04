@@ -39,7 +39,11 @@ public class TouchDetector : MonoBehaviour
 
     void Start()
     {
-        //GameControllerCPR.Instance.OnReset.AddListener(OnReset);
+        GameController.Instance.OnReset.AddListener(OnReset);
+        NodesGenerator.Instance.OnBoardReady.AddListener(delegate
+        {
+            CanTouch = true;
+        });
     }
 
     void Update()

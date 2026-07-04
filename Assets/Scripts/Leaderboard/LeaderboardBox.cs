@@ -15,7 +15,7 @@ public class LeaderboardBox : MonoBehaviour
 
     public void SetLeaderboardBox(int position, Sprite iconSprite, string playerName, int points)
     {
-        _leaderboardPositionText.text = position.ToString("0");
+        _leaderboardPositionText.text = "#" + position.ToString("0");
         _iconImage.sprite = iconSprite;
         _playerNameText.text = playerName;
         _pointsText.text = points.ToString("0");

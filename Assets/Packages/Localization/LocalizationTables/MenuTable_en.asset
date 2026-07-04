@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51072704512
-    m_Localized: Leaderboard
+    m_Localized: TOP 5
     m_Metadata:
       m_Items: []
   - m_Id: 8193919655936
@@ -42,6 +42,92 @@ MonoBehaviour:
     m_Localized: 'Personalized
 
       <size=28><i>(NO LEADERBOARD)</i></size>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10934310098452480
+    m_Localized: Play and be the first to make the leaderboard!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938047751798784
+    m_Localized: 'Time:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938118937526272
+    m_Localized: 'Height:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938144954793984
+    m_Localized: 'Width:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938171466989568
+    m_Localized: 'Nodes:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11526761293037568
+    m_Localized: New version available!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11527176164229120
+    m_Localized: You won't be able to submit your score or view the TOP 5 until you
+      update the game to the new version.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11527599788933120
+    m_Localized: Download the new version
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11527783965016064
+    m_Localized: Play without connection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11551011617914880
+    m_Localized: No connection with the server
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11551985031987200
+    m_Localized: You won't be able to submit your score or view the Top 5.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11552351165366272
+    m_Localized: Play without connection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11553731145908224
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13109595740848128
+    m_Localized: Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13110019877257216
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13110638461599744
+    m_Localized: User Data
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13111482481393664
+    m_Localized: Delete data
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13111637599338496
+    m_Localized: Show save folder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13112307865894912
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13487214671970304
+    m_Localized: You will lose all your progress, and a new profile will be created.
+      Your leaderboard scores will not be deleted.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13487363917889536
+    m_Localized: Do you want to delete your profile permanently?
     m_Metadata:
       m_Items: []
   references:

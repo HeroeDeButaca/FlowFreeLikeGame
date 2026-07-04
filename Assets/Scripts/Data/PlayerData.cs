@@ -3,15 +3,16 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class PlayerData : MonoBehaviour
 {
-    private string saveDataFolder = "";
-    //private readonly string DATA_FILE_NAME = "PlayerData.dat";
+    private string _saveDataFolder = "";
     private readonly string DATA_FILE_NAME = "PlayerData.save";
 
     private Data _data;
     public Data UserData => _data;
+    public CompetitiveMode SelectedMode;
 
     [SerializeField]
     private CanvasGroup _userCreationGroup;
@@ -25,12 +26,12 @@ public class PlayerData : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        saveDataFolder = Application.persistentDataPath + "/Saves/";
+        _saveDataFolder = Application.persistentDataPath + "/Saves/";
     }
 
     void Start()
     {
-        string path = saveDataFolder + DATA_FILE_NAME;
+        string path = _saveDataFolder + DATA_FILE_NAME;
 
         if (File.Exists(path))
         {
@@ -46,8 +47,13 @@ public class PlayerData : MonoBehaviour
         }
         else
         {
-            UserCreationControl(true);
+            _userCreationGroup?.SetVisible(true);
         }
+    }
+
+    void OnDestroy()
+    {
+        Instance = null;
     }
 
     public void ReadUsernameInput(TMP_InputField usernameInput)
@@ -73,7 +79,7 @@ public class PlayerData : MonoBehaviour
 
         Task.Run(() =>
         {
-            JsonCreator.SaveData(_data, saveDataFolder, DATA_FILE_NAME);
+            JsonCreator.SaveData(_data, _saveDataFolder, DATA_FILE_NAME);
             saveCompleted = true;
         });
 
@@ -82,18 +88,8 @@ public class PlayerData : MonoBehaviour
             yield return null;
         }
 
-        UserCreationControl(false);
+        _userCreationGroup?.SetVisible(false);
         IconManager.Instance.InitializeIcons();
-    }
-
-    private void UserCreationControl(bool show)
-    {
-        if (_userCreationGroup == null)
-            return;
-
-        _userCreationGroup.alpha = show ? 1 : 0;
-        _userCreationGroup.interactable = show;
-        _userCreationGroup.blocksRaycasts = show;
     }
 
     public void SavePlayerData()
@@ -107,7 +103,7 @@ public class PlayerData : MonoBehaviour
 
         Task.Run(() =>
         {
-            JsonCreator.SaveData(_data, saveDataFolder, DATA_FILE_NAME);
+            JsonCreator.SaveData(_data, _saveDataFolder, DATA_FILE_NAME);
             saveCompleted = true;
         });
 
@@ -115,5 +111,22 @@ public class PlayerData : MonoBehaviour
         {
             yield return null;
         }
+    }
+
+    public void ShowFileFolder() { Application.OpenURL(_saveDataFolder); }
+
+    public void DeleteData()
+    {
+        string path = _saveDataFolder + DATA_FILE_NAME;
+
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+
+        SceneManager.LoadScene(0);
+
+        // NO SE SI FUNCIONARA COMO ESPERO
+        Destroy(gameObject);
     }
 }

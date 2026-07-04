@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Spanish (Spain) (es-ES)
   m_GUID: ddfd4c32846589745a2b580ce8f29894
   m_SerializeEntries:
+  - m_GUID: 652e027ce812f854c8e19a18d7a8f1ab
+    m_Address: GameTexts_es-ES
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es-ES
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 98d500fc94f40dd489d42caa28341e89
     m_Address: PlayerIcons_es-ES
     m_ReadOnly: 1

@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51072704512
-    m_Localized: "Taula de clasificaci\xF3"
+    m_Localized: TOP 5
     m_Metadata:
       m_Items: []
   - m_Id: 8193919655936
@@ -40,6 +40,88 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 8831428698112
     m_Localized: "Personalitzat\n<size=28><i>(SENSE CLASIFICACI\xD3)</i></size>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10934310098452480
+    m_Localized: "Juga i sigues el primer en entrar a la classificaci\xF3!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938047751798784
+    m_Localized: 'Temps:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938118937526272
+    m_Localized: 'Llargada:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938144954793984
+    m_Localized: 'Amplada:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10938171466989568
+    m_Localized: 'Nodes:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11526761293037568
+    m_Localized: "Nova versi\xF3 disponible!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11527176164229120
+    m_Localized: "No podr\xE0s pujar la teva puntuaci\xF3 ni veure el TOP 5 fins
+      que actualitzis el joc a la nova versi\xF3."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11527599788933120
+    m_Localized: "Descarregar la nova versi\xF3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11527783965016064
+    m_Localized: "Juga sense conexi\xF3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11551011617914880
+    m_Localized: "No hi ha conexi\xF3 amb el servidor"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11551985031987200
+    m_Localized: "No podr\xE0s pujar la teva puntuaci\xF3 ni veure el TOP 5."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11552351165366272
+    m_Localized: "Juga sense conexi\xF3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11553731145908224
+    m_Localized: Sortir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13109595740848128
+    m_Localized: Pantalla completa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13110019877257216
+    m_Localized: "M\xFAsica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13110638461599744
+    m_Localized: Dades del usuari
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13111482481393664
+    m_Localized: Esborrar dades
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13111637599338496
+    m_Localized: "Mostra la carpeta que cont\xE9 el fitxer de desat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13112307865894912
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13487214671970304
+    m_Localized: "Perdr\xE0s tot el teu progr\xE9s i es crear\xE0 un perfil nou.
+      Les teves puntuacions a les classificacions no s'eliminaran."
     m_Metadata:
       m_Items: []
   references:

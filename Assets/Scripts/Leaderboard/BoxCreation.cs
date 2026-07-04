@@ -28,34 +28,42 @@ public class BoxCreation : MonoBehaviour
         int score = int.Parse(_scoreInput.text);
 
         _leaderboardData = new LeaderboardData(modeId, playerName, 0, score);
-        string fileRequestName = modeId.ToString("0") + "/" + playerName + "_Mode" + modeId.ToString("0");
 
-        StartCoroutine(PostToDatabase(fileRequestName));
+        PostToDatabase(modeId, playerName, 0, score);
     }
 
-    private IEnumerator PostToDatabase(string fileRequestName)
+    private void PostToDatabase(int modeId, string playerName, int iconId, int newScore)
     {
-        LeaderboardData oldPlayerData = null;
-        bool dataObtained = false;
+        string key = $"{playerName}_Mode{modeId}";
+        string url = $"{_databaseLink}{modeId}/{key}.json";
 
-        RestClient.Get<LeaderboardData>(_databaseLink + fileRequestName + ".json").Then(response =>
+        RestClient.Get(url).Then(response =>
         {
-            oldPlayerData = response;
-            dataObtained = true;
+            LeaderboardData data;
+
+            if (response != null && !string.IsNullOrEmpty(response.Text) && response.Text != "null")
+            {
+                data = JsonUtility.FromJson<LeaderboardData>(response.Text);
+            }
+            else
+            {
+                data = new LeaderboardData(modeId, playerName, iconId, newScore);
+            }
+
+            if (data.TotalPoints < newScore)
+                data.TotalPoints = newScore;
+
+            data.PlayerName = playerName;
+            data.ModeId = modeId;
+            data.IconId = iconId;
+
+            RestClient.Put(url, data)
+                .Then(_ => Debug.Log("Score updated"))
+                .Catch(err => Debug.LogError(err));
+        })
+        .Catch(err =>
+        {
+            Debug.LogError($"GET error: {err}");
         });
-
-        while (!dataObtained)
-            yield return null;
-
-        bool doPutRequest = true;
-
-        if(oldPlayerData != null)
-        {
-            if (oldPlayerData.TotalPoints > _leaderboardData.TotalPoints)
-                doPutRequest = false;
-        }
-
-        if(doPutRequest)
-            RestClient.Put(_databaseLink + fileRequestName +".json", _leaderboardData);
     }
 }

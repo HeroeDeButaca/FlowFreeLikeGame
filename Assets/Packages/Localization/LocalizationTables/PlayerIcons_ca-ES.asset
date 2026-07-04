@@ -34,6 +34,18 @@ MonoBehaviour:
     m_Localized: Que es faci el silenci
     m_Metadata:
       m_Items: []
+  - m_Id: 13820836868276224
+    m_Localized: Posa el joc en Espanyol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13821345230503936
+    m_Localized: "Posa el joc en Angl\xE8s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13821571097968640
+    m_Localized: "Posa el joc en Catal\xE0"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

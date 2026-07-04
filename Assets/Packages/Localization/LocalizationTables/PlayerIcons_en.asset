@@ -34,6 +34,18 @@ MonoBehaviour:
     m_Localized: 
     m_Metadata:
       m_Items: []
+  - m_Id: 13820836868276224
+    m_Localized: Put the game in Spanish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13821345230503936
+    m_Localized: Put the game in English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13821571097968640
+    m_Localized: Put the game in Catala
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

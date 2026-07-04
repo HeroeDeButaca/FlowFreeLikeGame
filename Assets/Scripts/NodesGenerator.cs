@@ -29,8 +29,8 @@ public class NodesGenerator : MonoBehaviour
     [Header("Iterator values")]
 
     [SerializeField]
-    private int _minIterations = 75;
-    private int _maxIterations = 200;
+    private int _minIterations = 325;
+    private int _maxIterations = 450;
 
     [SerializeField]
     private Image _bgrLoadingImage;
@@ -65,7 +65,7 @@ public class NodesGenerator : MonoBehaviour
 
     void Start()
     {
-        //GameControllerCPR.Instance.OnReset.AddListener(OnReset);
+        GameController.Instance.OnReset.AddListener(OnReset);
     }
 
     public void CreateCorrectBoard(int nodes)
@@ -320,7 +320,7 @@ public class NodesGenerator : MonoBehaviour
             float eased = 1f - Mathf.Pow(t, exponent);
             _bgrLoadingImage.fillAmount = eased;
 
-            if(i % 2 == 0)
+            if(i % 5 == 0)
                 yield return null;
         }
 

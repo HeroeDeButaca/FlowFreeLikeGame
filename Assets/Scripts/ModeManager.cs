@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Localization;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class CompetitiveMode
@@ -51,6 +52,9 @@ public class ModeManager : MonoBehaviour
     [SerializeField]
     private TMP_Text _modeNodesText;
 
+    [SerializeField]
+    private Button _playButton;
+
     void Start()
     {
         SetButtonModes();
@@ -69,6 +73,12 @@ public class ModeManager : MonoBehaviour
             modeButton.onClick.AddListener(delegate
             {
                 SelectMode(mode);
+
+                LeaderboardController.Instance.LoadLeaderboard(mode.ModeId);
+                _playButton.onClick.AddListener(delegate
+                {
+                    StartGame(mode);
+                });
             });
 
             TMP_Text modeButText = modeButtonGO.GetComponentInChildren<TMP_Text>();
@@ -93,4 +103,12 @@ public class ModeManager : MonoBehaviour
         _modePanelGroup.interactable = show;
         _modePanelGroup.blocksRaycasts = show;
     }
+
+    public void StartGame(CompetitiveMode mode)
+    {
+        PlayerData.Instance.SelectedMode = mode;
+        SceneManager.LoadScene(1);
+    }
+
+    public void ResetPlayButton() { _playButton.onClick.RemoveAllListeners(); }
 }
