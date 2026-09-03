@@ -307,6 +307,13 @@ MonoBehaviour:
   OnReset:
     m_PersistentCalls:
       m_Calls: []
+  _bgmMusics:
+  - {fileID: 8300000, guid: a32798edd133d8249be48c7c02c1718e, type: 3}
+  - {fileID: 8300000, guid: fc1b9223400cd2542a2634bbf01c279b, type: 3}
+  - {fileID: 8300000, guid: dae1fe3562c64984e989ea28da6df234, type: 3}
+  - {fileID: 8300000, guid: d9713eb73adab414dbb45f0ea485187c, type: 3}
+  - {fileID: 8300000, guid: 19d5922f8dee0024295df1e4e8ab2f04, type: 3}
+  - {fileID: 8300000, guid: 640f87fb0a03a5441b5c7bb02a8f1453, type: 3}
 --- !u!4 &347200512
 Transform:
   m_ObjectHideFlags: 0
@@ -1508,6 +1515,7 @@ MonoBehaviour:
   OnTableFilled:
     m_PersistentCalls:
       m_Calls: []
+  _bubblePopSfx: {fileID: 8300000, guid: 5db8b7cc68097974ebf4e642a3dd46ad, type: 3}
 --- !u!4 &961012566
 Transform:
   m_ObjectHideFlags: 0

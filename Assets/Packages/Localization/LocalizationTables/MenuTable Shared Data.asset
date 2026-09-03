@@ -43,6 +43,10 @@ MonoBehaviour:
     m_Key: Menu.Leaderboard.PlayFirst
     m_Metadata:
       m_Items: []
+  - m_Id: 31215535652356096
+    m_Key: Menu.Leaderboard.Instructions
+    m_Metadata:
+      m_Items: []
   - m_Id: 10938047751798784
     m_Key: Menu.ModeDetails.Time
     m_Metadata:
@@ -89,6 +93,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 11553731145908224
     m_Key: Menu.NoConnection.ExitButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17687172375658496
+    m_Key: Menu.Options.Title
     m_Metadata:
       m_Items: []
   - m_Id: 13109595740848128

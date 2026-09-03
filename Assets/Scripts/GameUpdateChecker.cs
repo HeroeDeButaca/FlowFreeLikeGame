@@ -60,10 +60,10 @@ public class GameUpdateChecker : MonoBehaviour
             {
                 serverVersion = float.Parse(response.Text, en_US);
             }
-            Debug.Log($"App version: {applicationVersion}, Server version: {serverVersion}");
+            //Debug.Log($"App version: {applicationVersion}, Server version: {serverVersion}");
 
             bool isUpdated = serverVersion == applicationVersion;
-            Debug.Log($"IsUpdated: {isUpdated}");
+            //Debug.Log($"IsUpdated: {isUpdated}");
 
             callback?.Invoke(false, isUpdated);
         })

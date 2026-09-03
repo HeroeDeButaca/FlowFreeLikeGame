@@ -85,7 +85,7 @@ public class LeaderboardController : MonoBehaviour
             for (int i = 0; i < top5.Count; i++)
             {
                 var data = top5[i];
-                Debug.Log($"{i + 1}. {data.PlayerName} - {data.TotalPoints}");
+                //Debug.Log($"{i + 1}. {data.PlayerName} - {data.TotalPoints}");
                 _leaderboardData[modeId, i] = data;
             }
         });

@@ -29,11 +29,6 @@ public class IconManager : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
-    {
-        //InitializeIcons();
-    }
-
     public void InitializeIcons()
     {
         IconUnlocked[] playerIconsUnlocked = PlayerData.Instance.UserData.IconsUnlocked.ToArray(); 
@@ -64,6 +59,17 @@ public class IconManager : MonoBehaviour
         }
 
         _totalIconsUnlockedText.text = $"{_totalIconsUnlocked} / {_iconsData.Length}";
+    }
+
+    public void ResetIconsPanel()
+    {
+        _totalIconsUnlocked = 0;
+
+        for(int i = 0; i < _contentIcons.childCount; i++)
+        {
+            GameObject go = _contentIcons.GetChild(i).gameObject;
+            Destroy(go);
+        }
     }
 
     public void CheckListBoolData()

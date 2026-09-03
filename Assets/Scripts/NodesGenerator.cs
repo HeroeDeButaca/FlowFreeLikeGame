@@ -50,8 +50,6 @@ public class NodesGenerator : MonoBehaviour
     [Tooltip("Padre del tablero")]
     private Transform _fatherBoard;
 
-    private bool _boardReady = false;
-
     [HideInInspector]
     public UnityEvent OnBoardReady;
 
@@ -323,9 +321,6 @@ public class NodesGenerator : MonoBehaviour
             if(i % 5 == 0)
                 yield return null;
         }
-
-        // Decimos que ha terminado de generar el tablero
-        _boardReady = true;
     }
 
     /// <summary>
@@ -470,6 +465,5 @@ public class NodesGenerator : MonoBehaviour
     private void OnReset()
     {
         ClearNodes();
-        _boardReady = false;
     }
 }

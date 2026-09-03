@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PIcon06
   m_EditorClassIdentifier: Assembly-CSharp::IconData
   IconId: 6
-  IconSprite: {fileID: 21300000, guid: 84a5d304474c05544b395ca795f5cb86, type: 3}
+  IconSprite: {fileID: 21300000, guid: 9a8a3c28a9762d3449c5152dfa54cc93, type: 3}
   IsLocked: 1
   RequerimentLocale:
     m_TableReference:

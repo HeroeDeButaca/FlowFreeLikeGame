@@ -17,8 +17,8 @@ public class ConfigData
     public ConfigData()
     {
         IsFullscreen = true;
-        MusicVolume = 1f;
-        SfxVolume = 1f;
+        MusicVolume = 0.5f;
+        SfxVolume = 0.5f;
         LanguageSelected = 0;
     }
 }
@@ -41,8 +41,14 @@ public class OptionsManager : MonoBehaviour
     private string _saveDataFolder = "";
     private readonly string CONFIG_FILE_NAME = "config.json";
 
+    private bool _initialized = false;
+
+    private AudioManager _audioManager;
+
     void Start()
     {
+        _audioManager = AudioManager.Instance;
+
         _saveDataFolder = Application.persistentDataPath + "/";
         string path = _saveDataFolder + CONFIG_FILE_NAME;
 
@@ -83,6 +89,8 @@ public class OptionsManager : MonoBehaviour
         ChangeMusicVolume(musicVolume);
         ChangeSfxVolume(sfxVolume);
         ChangeLanguage(languageSelected);
+
+        _initialized = true;
     }
 
     #region Change option values
@@ -90,26 +98,38 @@ public class OptionsManager : MonoBehaviour
     {
         Screen.fullScreen = fullscreen;
         _configData.IsFullscreen = fullscreen;
-        JsonCreator.SaveData(_configData, _saveDataFolder, CONFIG_FILE_NAME);
+
+        if(_initialized)
+            JsonCreator.SaveData(_configData, _saveDataFolder, CONFIG_FILE_NAME);
     }
 
     private void ChangeMusicVolume(float volume)
     {
-
+        _audioManager.ChangeBgmVolume(volume);
         _configData.MusicVolume = volume;
-        JsonCreator.SaveData(_configData, _saveDataFolder, CONFIG_FILE_NAME);
+
+        if (volume >= 1f)
+            IconUnlocker.Instance.UnlockIcon(2);
+        else if (volume <= 0f)
+            IconUnlocker.Instance.UnlockIcon(3);
+
+        if (_initialized)
+            JsonCreator.SaveData(_configData, _saveDataFolder, CONFIG_FILE_NAME);
     }
 
     private void ChangeSfxVolume(float volume)
     {
-
+        _audioManager.ChangeSfxVolume(volume);
         _configData.SfxVolume = volume;
-        JsonCreator.SaveData(_configData, _saveDataFolder, CONFIG_FILE_NAME);
+
+        if (_initialized)
+            JsonCreator.SaveData(_configData, _saveDataFolder, CONFIG_FILE_NAME);
     }
 
     private void ChangeLanguage(int value)
     {
         _configData.LanguageSelected = value;
+        IconUnlocker.Instance.UnlockIcon(value+4);
         StartCoroutine(ChangeLanguageCo(value));
     }
 
@@ -120,7 +140,9 @@ public class OptionsManager : MonoBehaviour
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[localeId];
 
         _languageDropdown.interactable = true;
-        JsonCreator.SaveData(_configData, _saveDataFolder, CONFIG_FILE_NAME);
+
+        if (_initialized)
+            JsonCreator.SaveData(_configData, _saveDataFolder, CONFIG_FILE_NAME);
     }
     #endregion
 
@@ -129,8 +151,6 @@ public class OptionsManager : MonoBehaviour
         // Averiguamos los nombres de los locales que tiene el proyecto
         Locale[] locales = LocalizationSettings.AvailableLocales.Locales.ToArray();
         string[] languagesNames = new string[locales.Length];
-
-        Debug.Log($"Total locales: {locales.Length}");
 
         for (int i = 0; i < locales.Length; i++)
         {

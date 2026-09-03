@@ -12,13 +12,16 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private TMP_Text _timeText;
 
-    private int _nodes;
+    private int _maxNodes;
 
     private int _completedBoards;
     [SerializeField]
     private TMP_Text _completedBoardsText;
 
     public UnityEvent OnReset;
+
+    [SerializeField]
+    private AudioClip[] _bgmMusics;
 
     public static GameController Instance;
 
@@ -37,6 +40,8 @@ public class GameController : MonoBehaviour
         TouchDetector.Instance.OnTableFilled.AddListener(TableFilled);
 
         SetGame();
+
+        SetMusic();
     }
 
     void Update()
@@ -62,12 +67,12 @@ public class GameController : MonoBehaviour
         CompetitiveMode mode = PlayerData.Instance.SelectedMode;
         int width = mode.TableWidth;
         int height = mode.TableHeight;
-        _nodes = mode.NodesPerBoard;
+        _maxNodes = mode.NodesPerBoard;
 
         _maxTime = mode.TotalTime;
         _currentTime = _maxTime;
 
-        BoardGenerator.Instance.GenerateBoard(width, height, _nodes);
+        BoardGenerator.Instance.GenerateBoard(width, height, _maxNodes);
     }
 
     private void TableFilled()
@@ -77,6 +82,12 @@ public class GameController : MonoBehaviour
         _completedBoards++;
         _completedBoardsText.text = _completedBoards.ToString("0");
 
-        NodesGenerator.Instance.CreateCorrectBoard(_nodes);
+        NodesGenerator.Instance.CreateCorrectBoard(_maxNodes);
+    }
+
+    private void SetMusic()
+    {
+        int randMusic = Random.Range(0, _bgmMusics.Length);
+        AudioManager.Instance.PlayBGM(_bgmMusics[randMusic], true);
     }
 }

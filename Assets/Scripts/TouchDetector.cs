@@ -8,6 +8,9 @@ public class TouchDetector : MonoBehaviour
     [SerializeField] private LineRenderer _activeLineRenderer;
     private Node _actualNode;
 
+    private int _pairsConnected;
+    private int _totalPairs;
+
     public bool CanTouch = true;
 
     [Tooltip("Lista de LineRenderers existentes en el tablero")]
@@ -29,6 +32,9 @@ public class TouchDetector : MonoBehaviour
     [Tooltip("Evento que se ejecutará cuando el tablero este lleno")]
     public UnityEvent OnTableFilled;
 
+    [SerializeField]
+    private AudioClip _bubblePopSfx;
+
     public static TouchDetector Instance;
 
     void Awake()
@@ -44,6 +50,8 @@ public class TouchDetector : MonoBehaviour
         {
             CanTouch = true;
         });
+
+        _totalPairs = PlayerData.Instance.SelectedMode.NodesPerBoard;
     }
 
     void Update()
@@ -101,6 +109,13 @@ public class TouchDetector : MonoBehaviour
                         Destroy(_actualNode.NodePair.AssociedLineRenderer.gameObject);
                     }
 
+                    if (_actualNode.IsCorrectPath)
+                    {
+                        _pairsConnected--;
+                        _actualNode.IsCorrectPath = false;
+                        _actualNode.NodePair.IsCorrectPath = false;
+                    }
+
                     _activeLineRenderer = Instantiate(_prefabLineRenderer, Vector3.zero,
                         Quaternion.identity, _fatherBoard).GetComponent<LineRenderer>();
 
@@ -133,9 +148,6 @@ public class TouchDetector : MonoBehaviour
 
                         if (IsANewCell(clickedGO) && !ItBreaksSomeRule(clickedGO))
                         {
-                            _activeLineRenderer.positionCount++;
-                            _activeLineRenderer.SetPosition((_activeLineRenderer.positionCount - 1), clickedGO.transform.position);
-
                             _cellsPath.Add(clickedGO);
 
                             CorrectLineRendererPath();
@@ -162,6 +174,12 @@ public class TouchDetector : MonoBehaviour
             {
                 if (IsLineRendererPathCorrect())
                 {
+                    float t = ((float)_pairsConnected / ((float)_totalPairs - 1));
+                    float pitch = Mathf.Lerp(1f, 2f, t);
+                    AudioManager.Instance.PlaySFX(_bubblePopSfx, pitch);
+
+                    _pairsConnected++;
+
                     // Le decimos al nodo y a su pareja que ha hecho un camino correcto
                     _actualNode.IsCorrectPath = true;
                     _actualNode.NodePair.IsCorrectPath = true;
@@ -216,25 +234,6 @@ public class TouchDetector : MonoBehaviour
     /// <returns>La celda tocada en forma de GameObject</returns>
     private GameObject GetMouseGameObjectCell()
     {
-        /*
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-
-        if (hit.collider != null)
-        {
-            if (hit.collider.CompareTag("ZonaJuego"))
-            {
-                Debug.Log("FueraJuego");
-            }
-
-            if (hit.collider.CompareTag("Estimulo"))
-            {
-                //Debug.Log("Target Position: " + hit.collider.gameObject.transform.parent.gameObject.name);
-                return hit.collider.gameObject.transform.parent.gameObject;
-            }
-        }
-
-        return null;
-        */
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
         Collider2D topCollider = null;
@@ -369,51 +368,112 @@ public class TouchDetector : MonoBehaviour
     }
 
     /// <summary>
-    /// Averigua si ha roto alguna regla
+    /// Comprueba si el movimiento desde la última celda hasta la celda indicada
+    /// rompe alguna de las reglas del juego.
+    ///
+    /// También comprueba todas las celdas intermedias
     /// </summary>
-    /// <param name="cellGO"></param>
-    /// <returns></returns>
-    private bool ItBreaksSomeRule(GameObject cellGO)
+    private bool ItBreaksSomeRule(GameObject targetCell)
     {
-        bool itBreaksRule = false;
-        Vector3 lastCellPos = _cellsPath.Last().transform.position;
-        Vector3 actualCellPos = cellGO.transform.position;
+        if (_cellsPath.Count == 0)
+            return false;
 
-        // Averiguamos si ha hecho un movimiento en diagonal
-        if (lastCellPos + new Vector3(1, 1, 0) == actualCellPos) { itBreaksRule = true; goto FinalBreakSomeRule; }
-        else if (lastCellPos + new Vector3(1, -1, 0) == actualCellPos) { itBreaksRule = true; goto FinalBreakSomeRule; }
-        else if (lastCellPos + new Vector3(-1, 1, 0) == actualCellPos) { itBreaksRule = true; goto FinalBreakSomeRule; }
-        else if (lastCellPos + new Vector3(-1, -1, 0) == actualCellPos) { itBreaksRule = true; goto FinalBreakSomeRule; }
+        Vector3 startPos = _cellsPath.Last().transform.position;
+        Vector3 targetPos = targetCell.transform.position;
 
-        // Averiguamos si ha atravesado un nodo
-        if (IsThereNode(GetCellGOByPosition(lastCellPos), out Node node) && _cellsPath.Count > 1)
+        if (_cellsPath.Count > 1 && IsThereNode(_cellsPath.Last(), out Node lastNode))
         {
-            itBreaksRule = true;
-            goto FinalBreakSomeRule;
+            return true;
         }
 
-        // Averiguamos si ha atravesado una linea
-        foreach (LineRenderer lr in _lineRenderers)
+        int xDif = Mathf.RoundToInt(targetPos.x - startPos.x);
+        int yDif = Mathf.RoundToInt(targetPos.y - startPos.y);
+
+        if (xDif != 0 && yDif != 0)
+            return true;
+
+
+        // Obtenemos todas las posiciones que se han atravesado
+        List<Vector3> positionsToCheck = new List<Vector3>();
+
+        int steps = Mathf.Max(Mathf.Abs(xDif), Mathf.Abs(yDif));
+
+        if (steps > 1)
         {
-            Vector3[] positions = new Vector3[lr.positionCount];
-            lr.GetPositions(positions);
+            int xStep = xDif == 0 ? 0 : xDif / Mathf.Abs(xDif);
+            int yStep = yDif == 0 ? 0 : yDif / Mathf.Abs(yDif);
 
-            foreach (Vector3 position in positions)
+            for (int i = 1; i < steps; i++)
             {
-                if (position == actualCellPos)
-                {
-                    itBreaksRule = true;
-                    goto FinalBreakSomeRule;
-                }
+                Vector3 intermediatePos = new Vector3(
+                    startPos.x + xStep * i,
+                    startPos.y + yStep * i,
+                    0f
+                );
 
+                positionsToCheck.Add(intermediatePos);
             }
         }
 
 
-    // Esto es una etiqueta. Si se hace un 'goto FinalBreakSomeRule'
-    // se ira aquí directamente
-    FinalBreakSomeRule:
-        return itBreaksRule;
+        // También comprobamos la celda destino
+        positionsToCheck.Add(targetPos);
+
+        // Comprobamos cada celda atravesada
+        foreach (Vector3 position in positionsToCheck)
+        {
+            GameObject cell = GetCellGOByPosition(position);
+
+            if (cell == null)
+                continue;
+
+            // Comprueba si la celda ya pertenece al camino actual
+            if (_cellsPath.Contains(cell))
+            {
+                // La celda destino puede ser una posición antigua del camino.
+                if (cell == targetCell)
+                    continue;
+
+                return true;
+            }
+
+
+            // Comprueba si hemos atravesado un nodo
+            if (IsThereNode(cell, out Node node))
+            {
+                // El nodo ya está conectado por otro LineRenderer
+                if (node.AssociedLineRenderer != null &&
+                    node.AssociedLineRenderer != _activeLineRenderer)
+                {
+                    return true;
+                }
+
+                // Si es un nodo pero no es el destino, no debe
+                // atravesarlo.
+                if (cell != targetCell)
+                {
+                    return true;
+                }
+
+                continue;
+            }
+
+            // Comprueba si hemos atravesado una línea existente
+            foreach (LineRenderer lr in _lineRenderers)
+            {
+                // No comprobamos nuestra propia línea
+                if (lr == _activeLineRenderer)
+                    continue;
+
+                for (int i = 0; i < lr.positionCount; i++)
+                {
+                    if (lr.GetPosition(i) == position)
+                        return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -504,86 +564,71 @@ public class TouchDetector : MonoBehaviour
         return isAnOldPos;
     }
 
+    /// <summary>
+    /// Corrige el camino del LineRenderer añadiendo las celdas que el ratón
+    /// se haya saltado debido a un movimiento rápido.
+    /// </summary>
     private void CorrectLineRendererPath()
     {
-        List<Vector3> correctPositions = new List<Vector3>();
-
-        if (_activeLineRenderer.positionCount <= 0)
+        if (_cellsPath.Count == 0 || _activeLineRenderer == null)
             return;
 
-        correctPositions.Add(_activeLineRenderer.GetPosition(0));
 
-        for (int i = 1; i < _activeLineRenderer.positionCount; i++)
+        List<GameObject> correctedCells = new List<GameObject>();
+
+        correctedCells.Add(_cellsPath[0]);
+
+
+        // Recorremos el camino actual y añadimos las celdas
+        // intermedias que falten.
+        for (int i = 1; i < _cellsPath.Count; i++)
         {
-            Vector3 lastLRPos = _activeLineRenderer.GetPosition(i - 1);
-            Vector3 actualLRPos = _activeLineRenderer.GetPosition(i);
+            GameObject previousCell = correctedCells.Last();
+            GameObject currentCell = _cellsPath[i];
 
-            int xDif = Mathf.RoundToInt(actualLRPos.x - lastLRPos.x);
-            int yDif = Mathf.RoundToInt(actualLRPos.y - lastLRPos.y);
+            Vector3 previousPos = previousCell.transform.position;
+            Vector3 currentPos = currentCell.transform.position;
 
-            if (xDif > 1) // X positivo
+            int xDif = Mathf.RoundToInt(currentPos.x - previousPos.x);
+            int yDif = Mathf.RoundToInt(currentPos.y - previousPos.y);
+
+            int steps = Mathf.Max(Mathf.Abs(xDif), Mathf.Abs(yDif));
+
+            int xStep = xDif == 0 ? 0 : xDif / Mathf.Abs(xDif);
+            int yStep = yDif == 0 ? 0 : yDif / Mathf.Abs(yDif);
+
+
+            // Añadimos las celdas intermedias
+            for (int j = 1; j < steps; j++)
             {
-                int initialX = Mathf.RoundToInt(lastLRPos.x + 1);
-                int finalX = Mathf.RoundToInt(actualLRPos.x);
+                Vector3 intermediatePos = new Vector3(
+                    previousPos.x + xStep * j,
+                    previousPos.y + yStep * j,
+                    0f
+                );
 
-                for (int j = initialX; j < finalX; j++)
+                GameObject intermediateCell = GetCellGOByPosition(intermediatePos);
+
+                if (intermediateCell != null)
                 {
-                    Vector3 phantomPos = new Vector3(j, actualLRPos.y, 0f);
-                    correctPositions.Add(phantomPos);
-                }
-
-            }
-            else if (xDif < -1) // X negativo
-            {
-                int initialX = Mathf.RoundToInt(lastLRPos.x - 1);
-                int finalX = Mathf.RoundToInt(actualLRPos.x);
-
-                for (int j = initialX; j > finalX; j--)
-                {
-                    Vector3 phantomPos = new Vector3(j, actualLRPos.y, 0f);
-                    correctPositions.Add(phantomPos);
-                }
-
-            }
-            else if (yDif > 1) // Y positivo
-            {
-                int initialY = Mathf.RoundToInt(lastLRPos.y + 1);
-                int finalY = Mathf.RoundToInt(actualLRPos.y);
-
-                for (int j = initialY; j < finalY; j++)
-                {
-                    Vector3 phantomPos = new Vector3(actualLRPos.x, j, 0f);
-                    correctPositions.Add(phantomPos);
+                    correctedCells.Add(intermediateCell);
                 }
             }
-            else if (yDif < -1) // Y negativo
-            {
-                int initialY = Mathf.RoundToInt(lastLRPos.y - 1);
-                int finalY = Mathf.RoundToInt(actualLRPos.y);
 
-                for (int j = initialY; j > finalY; j--)
-                {
-                    Vector3 phantomPos = new Vector3(actualLRPos.x, j, 0f);
-                    correctPositions.Add(phantomPos);
-                }
-
-            }
-
-            correctPositions.Add(actualLRPos);
+            correctedCells.Add(currentCell);
         }
 
-        if (_activeLineRenderer.positionCount < correctPositions.Count)
+        _cellsPath.Clear();
+        _cellsPath.AddRange(correctedCells);
+
+        _activeLineRenderer.positionCount = _cellsPath.Count;
+
+        for (int i = 0; i < _cellsPath.Count; i++)
         {
-            _cellsPath.Clear();
-
-            for (int i = 0; i < correctPositions.Count; i++)
-            {
-                GameObject cell = GetCellGOByPosition(correctPositions[i]);
-                _cellsPath.Add(cell);
-            }
-
-            _activeLineRenderer.positionCount = correctPositions.Count;
-            _activeLineRenderer.SetPositions(correctPositions.ToArray());
+            _activeLineRenderer.SetPosition(
+                i,
+                _cellsPath[i].transform.position
+            );
         }
     }
 
@@ -645,6 +690,8 @@ public class TouchDetector : MonoBehaviour
 
     private void OnReset()
     {
+        _pairsConnected = 0;
+
         CanTouch = false;
         _activeLineRenderer = null;
         _actualNode = null;

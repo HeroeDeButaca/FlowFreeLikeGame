@@ -36,7 +36,7 @@ public class PlayerData : MonoBehaviour
         if (File.Exists(path))
         {
             // Cargar datos
-            _data = JsonCreator.LoadData<Data>(path);
+            _data = JsonCreator.LoadEncryptedData<Data>(path);
             IconManager.Instance.CheckListBoolData();
             IconManager.Instance.InitializeIcons();
 
@@ -75,20 +75,9 @@ public class PlayerData : MonoBehaviour
 
         IconManager.Instance.CheckListBoolData();
 
-        bool saveCompleted = false;
+        yield return StartCoroutine(SavePlayerDataCo());
 
-        Task.Run(() =>
-        {
-            JsonCreator.SaveData(_data, _saveDataFolder, DATA_FILE_NAME);
-            saveCompleted = true;
-        });
-
-        while (!saveCompleted)
-        {
-            yield return null;
-        }
-
-        _userCreationGroup?.SetVisible(false);
+        _userCreationGroup.SetVisible(false);
         IconManager.Instance.InitializeIcons();
     }
 
@@ -103,7 +92,7 @@ public class PlayerData : MonoBehaviour
 
         Task.Run(() =>
         {
-            JsonCreator.SaveData(_data, _saveDataFolder, DATA_FILE_NAME);
+            JsonCreator.EncryptSaveData(_data, _saveDataFolder, DATA_FILE_NAME);
             saveCompleted = true;
         });
 
@@ -124,9 +113,8 @@ public class PlayerData : MonoBehaviour
             File.Delete(path);
         }
 
-        SceneManager.LoadScene(0);
-
-        // NO SE SI FUNCIONARA COMO ESPERO
         Destroy(gameObject);
+        SceneManager.LoadScene(0);
+        
     }
 }

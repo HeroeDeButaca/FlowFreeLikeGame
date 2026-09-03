@@ -124,6 +124,18 @@ MonoBehaviour:
       puntuaciones en las clasificaciones no se eliminar\xE1n."
     m_Metadata:
       m_Items: []
+  - m_Id: 13487363917889536
+    m_Localized: "\xBFQuieres eliminar tu perfil permanentemente?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17687172375658496
+    m_Localized: OPCIONES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31215535652356096
+    m_Localized: Selecciona un modo para ver el TOP 5
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

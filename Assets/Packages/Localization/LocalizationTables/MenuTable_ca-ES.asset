@@ -124,6 +124,18 @@ MonoBehaviour:
       Les teves puntuacions a les classificacions no s'eliminaran."
     m_Metadata:
       m_Items: []
+  - m_Id: 13487363917889536
+    m_Localized: Vols eliminar el teu perfil de manera permanent?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17687172375658496
+    m_Localized: OPCIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31215535652356096
+    m_Localized: Selecciona un mode per veure el TOP 5
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

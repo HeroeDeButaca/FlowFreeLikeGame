@@ -130,6 +130,14 @@ MonoBehaviour:
     m_Localized: Do you want to delete your profile permanently?
     m_Metadata:
       m_Items: []
+  - m_Id: 17687172375658496
+    m_Localized: OPTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31215535652356096
+    m_Localized: Select a mode to view the TOP 5
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

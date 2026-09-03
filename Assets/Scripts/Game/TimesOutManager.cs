@@ -4,6 +4,7 @@ using UnityEngine.Localization;
 using UnityEngine.UI;
 using TMPro;
 using Proyecto26;
+using System.Collections;
 
 public class TimesOutManager : MonoBehaviour
 {
@@ -96,7 +97,16 @@ public class TimesOutManager : MonoBehaviour
 
     private void ReturnToMenu()
     {
+        AudioManager.Instance.StopBGM();
+        StartCoroutine(ReturnToMenuCo());
+    }
+
+    private IEnumerator ReturnToMenuCo()
+    {
+        PlayerData.Instance.SavePlayerData();
+        yield return new WaitForSeconds(1f);
         Destroy(PlayerData.Instance.gameObject);
         SceneManager.LoadScene(0);
     }
+
 }

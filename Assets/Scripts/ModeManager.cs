@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Localization;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Localization.Components;
 
 [System.Serializable]
 public class CompetitiveMode
@@ -10,19 +11,11 @@ public class CompetitiveMode
     public int ModeId;
 
     public LocalizedString LocalizedModeName;
-    public string ModeName;
-    public TMP_Text ModeTMP;
 
     public int TotalTime;
     public int TableHeight;
     public int TableWidth;
     public int NodesPerBoard;
-
-    public void UpdateModeName()
-    {
-        ModeName = LocalizedModeName.GetLocalizedString();
-        ModeTMP?.SetText(ModeName);
-    }
 }
 
 public class ModeManager : MonoBehaviour
@@ -55,9 +48,14 @@ public class ModeManager : MonoBehaviour
     [SerializeField]
     private Button _playButton;
 
+    [Header("Other")]
+    [SerializeField]
+    private GameObject _instructionsGO;
+
     void Start()
     {
         SetButtonModes();
+        _instructionsGO.SetActive(true);
     }
 
     private void SetButtonModes()
@@ -65,7 +63,6 @@ public class ModeManager : MonoBehaviour
         for(int i = 0; i < _competitiveModes.Length; i++)
         {
             CompetitiveMode mode = _competitiveModes[i];
-            mode.UpdateModeName();
 
             GameObject modeButtonGO = Instantiate(_prefabButtonMode, _scrollContentModes);
 
@@ -81,8 +78,8 @@ public class ModeManager : MonoBehaviour
                 });
             });
 
-            TMP_Text modeButText = modeButtonGO.GetComponentInChildren<TMP_Text>();
-            modeButText.text = mode.ModeName;
+            LocalizedReference localizedReference = mode.LocalizedModeName;
+            modeButtonGO.GetComponentInChildren<LocalizeStringEvent>().StringReference.SetReference(localizedReference.TableReference, localizedReference.TableEntryReference);
         }
     }
 
@@ -90,11 +87,13 @@ public class ModeManager : MonoBehaviour
     {
         ModePanelGroupControl(true);
 
-        _modeTitleText.text = mode.ModeName;
+        _modeTitleText.text = mode.LocalizedModeName.GetLocalizedString();
         _modeTimeText.text = mode.TotalTime.ToString("0");
         _modeHeightText.text = mode.TableHeight.ToString("0");
         _modeWidthText.text = mode.TableWidth.ToString("0");
         _modeNodesText.text = mode.NodesPerBoard.ToString("0");
+
+        _instructionsGO.SetActive(false);
     }
 
     public void ModePanelGroupControl(bool show)
@@ -106,6 +105,11 @@ public class ModeManager : MonoBehaviour
 
     public void StartGame(CompetitiveMode mode)
     {
+        PlayerData.Instance.UserData.GamesPlayed++;
+
+        if (PlayerData.Instance.UserData.GamesPlayed >= 10)
+            IconUnlocker.Instance.UnlockIcon(1);
+
         PlayerData.Instance.SelectedMode = mode;
         SceneManager.LoadScene(1);
     }
