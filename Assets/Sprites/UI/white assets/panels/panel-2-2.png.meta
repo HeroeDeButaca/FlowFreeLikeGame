@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4c1d4048728f4ad40b213c01948445d1
+guid: afe7f3bf25ede6043b2bf69f8bf3d74a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3592125892098569178
-    second: toggle-on_0
+      213: 5824984349740453028
+    second: panel-2-2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -55,7 +55,7 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: toggle-on_0
+      name: panel-2-2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 117
-        height: 66
+        width: 1720
+        height: 800
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ad3b40b877bc9d130800000000000000
-      internalID: 3592125892098569178
+      spriteID: 4ac4d7c676086d050800000000000000
+      internalID: 5824984349740453028
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      toggle-on_0: 3592125892098569178
+      panel-2-2_0: 5824984349740453028
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
